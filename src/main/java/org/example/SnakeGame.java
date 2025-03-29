@@ -45,4 +45,40 @@ private void startGame() {
         Random random = new Random();
         food = new Point(random.nextInt(GRID_WIDTH), random.nextInt(GRID_HEIGHT));
     }
+
+    private void move() {
+        if (!running) return;
+        Point head = snake.get(0);
+        Point newHead = switch (direction) {
+            case 'U' -> new Point(head.x, head.y - 1);
+            case 'D' -> new Point(head.x, head.y + 1);
+            case 'L' -> new Point(head.x - 1, head.y);
+            case 'R' -> new Point(head.x + 1, head.y);
+            default -> head;
+        };
+
+        if (newHead.equals(food)) {
+            snake.add(0, newHead);
+            spawnFood();
+        } else {
+            snake.add(0, newHead);
+            snake.remove(snake.size() - 1);
+        }
+
+        checkCollision();
+    }
+
+    private void checkCollision() {
+    Point head = snake.get(0);
+        if (head.x < 0 || head.y < 0 || head.x >= GRID_WIDTH || head.y >= GRID_HEIGHT) {
+        running = false;
+    }
+        for (int i = 1; i < snake.size(); i++) {
+        if (head.equals(snake.get(i))) {
+            running = false;
+        }
+    }
+        if (!running) timer.stop();
+}
+
 }
