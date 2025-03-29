@@ -81,4 +81,38 @@ private void startGame() {
         if (!running) timer.stop();
 }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (running) {
+            g.setColor(Color.RED);
+            g.fillRect(food.x * TILE_SIZE, food.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
+            g.setColor(Color.GREEN);
+            for (Point point : snake) {
+                g.fillRect(point.x * TILE_SIZE, point.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            }
+        } else {
+            g.setColor(Color.WHITE);
+            g.drawString("Game Over", SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        move();
+        repaint();
+    }
+
+    private class KeyHandler extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP -> { if (direction != 'D') direction = 'U'; }
+                case KeyEvent.VK_DOWN -> { if (direction != 'U') direction = 'D'; }
+                case KeyEvent.VK_LEFT -> { if (direction != 'R') direction = 'L'; }
+                case KeyEvent.VK_RIGHT -> { if (direction != 'L') direction = 'R'; }
+            }
+        }
+    }
 }
