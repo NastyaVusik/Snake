@@ -12,17 +12,17 @@ import java.util.Random;
 
 public class SnakeGame extends JPanel implements ActionListener {
 
-        private final int TILE_SIZE = 20;
-        private final int GRID_WIDTH = 30;
-        private final int GRID_HEIGHT = 20;
-        private final int SCREEN_WIDTH = GRID_WIDTH * TILE_SIZE;
-        private final int SCREEN_HEIGHT = GRID_HEIGHT * TILE_SIZE;
+    private final int TILE_SIZE = 20;
+    private final int GRID_WIDTH = 30;
+    private final int GRID_HEIGHT = 20;
+    private final int SCREEN_WIDTH = GRID_WIDTH * TILE_SIZE;
+    private final int SCREEN_HEIGHT = GRID_HEIGHT * TILE_SIZE;
 
-        private final List<Point> snake = new ArrayList<>();
-        private Point food;
-        private char direction = 'R';
-        private boolean running = false;
-        private Timer timer;
+    private final List<Point> snake = new ArrayList<>();
+    private Point food;
+    private char direction = 'R';
+    private boolean running = false;
+    private Timer timer;
 
     public SnakeGame() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -32,13 +32,13 @@ public class SnakeGame extends JPanel implements ActionListener {
         startGame();
     }
 
-private void startGame() {
-    snake.clear();
-    snake.add(new Point(GRID_WIDTH / 2, GRID_HEIGHT / 2));
-    spawnFood();
-    running = true;
-    timer = new Timer(100, this);
-    timer.start();
+    private void startGame() {
+        snake.clear();
+        snake.add(new Point(GRID_WIDTH / 2, GRID_HEIGHT / 2));
+        spawnFood();
+        running = true;
+        timer = new Timer(100, this);
+        timer.start();
     }
 
     private void spawnFood() {
@@ -69,17 +69,17 @@ private void startGame() {
     }
 
     private void checkCollision() {
-    Point head = snake.get(0);
+        Point head = snake.get(0);
         if (head.x < 0 || head.y < 0 || head.x >= GRID_WIDTH || head.y >= GRID_HEIGHT) {
-        running = false;
-    }
-        for (int i = 1; i < snake.size(); i++) {
-        if (head.equals(snake.get(i))) {
             running = false;
         }
-    }
+        for (int i = 1; i < snake.size(); i++) {
+            if (head.equals(snake.get(i))) {
+                running = false;
+            }
+        }
         if (!running) timer.stop();
-}
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -108,10 +108,18 @@ private void startGame() {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP -> { if (direction != 'D') direction = 'U'; }
-                case KeyEvent.VK_DOWN -> { if (direction != 'U') direction = 'D'; }
-                case KeyEvent.VK_LEFT -> { if (direction != 'R') direction = 'L'; }
-                case KeyEvent.VK_RIGHT -> { if (direction != 'L') direction = 'R'; }
+                case KeyEvent.VK_UP -> {
+                    if (direction != 'D') direction = 'U';
+                }
+                case KeyEvent.VK_DOWN -> {
+                    if (direction != 'U') direction = 'D';
+                }
+                case KeyEvent.VK_LEFT -> {
+                    if (direction != 'R') direction = 'L';
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    if (direction != 'L') direction = 'R';
+                }
             }
         }
     }
